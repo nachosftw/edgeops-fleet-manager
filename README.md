@@ -41,5 +41,24 @@ To provide a lightweight, cloud-native, and developer-friendly fleet orchestrati
 ### Running with Docker Compose
 1. **Clone the repository:**
    ```bash
-   git clone <YOUR_GITHUB_REPO_URL>
-   cd <YOUR_REPO_NAME>
+   git clone <https://github.com/nachosftw/edgeops-fleet-manager>
+   cd <edgeops-fleet-manager>
+   ## MoSCoW Prioritization
+* **Must Have (Essential for MVP):**
+  * View Device List (US 01)
+  * Add New Device (US 02)
+  * Delete Device (US 03)
+  * Containerized Stack & Docker Compose (US 06, US 07, US 08)
+* **Should Have (High Priority):**
+  * Filter Devices by Status (US 04)
+  * Device Detail View (US 05)
+  * Enable Hot-Reloading (US 09)
+* **Could Have (Nice to Have):**
+  * Search Fleet (US 16)
+  * Device Geolocation Map (US 20)
+  * Battery Telemetry Monitoring (US 22)
+* **Won't Have (Deferred for Future Releases):**
+  * Firmware Update Trigger (US 23)
+  * User Authentication (US 17)
+  ## Architecture Diagram
+![System Architecture](./rev1.drawio.png)
