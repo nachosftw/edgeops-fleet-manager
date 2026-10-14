@@ -6,7 +6,7 @@ VERSION := $(shell cat VERSION)
         frontend-test e2e build docker-build up down release clean
 
 help:
-	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-18s %s\n", $$1, $$2}'
+	@grep -E '^[a-z0-9-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-18s %s\n", $$1, $$2}'
 
 install: ## Install backend + frontend dependencies
 	cd backend && $(PY) -m pip install -r requirements-dev.txt

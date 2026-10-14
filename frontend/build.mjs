@@ -2,7 +2,7 @@
 //   node build.mjs          -> production bundle in dist/
 //   node build.mjs --serve  -> dev server on :3000, proxies /api to the backend
 import * as esbuild from 'esbuild';
-import { copyFileSync, mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync, existsSync } from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 
@@ -11,6 +11,7 @@ const PORT = Number(process.env.PORT || 3000);
 const API_TARGET = new URL(process.env.API_TARGET || 'http://localhost:5000');
 const outdir = 'dist';
 
+if (!serve) rmSync(outdir, { recursive: true, force: true }); // clean production build
 mkdirSync(outdir, { recursive: true });
 const html = readFileSync('public/index.html', 'utf8');
 writeFileSync(path.join(outdir, 'index.html'), html);
@@ -31,9 +32,7 @@ const options = {
 };
 
 if (!serve) {
-  const result = await esbuild.build({ ...options, metafile: true });
-  const text = await esbuild.analyzeMetafile(result.metafile);
-  console.log(text);
+  await esbuild.build(options);
 } else {
   const ctx = await esbuild.context(options);
   await ctx.watch();
