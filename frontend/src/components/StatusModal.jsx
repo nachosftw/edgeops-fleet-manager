@@ -38,7 +38,7 @@ export default function StatusModal({ device, onClose, onSubmit }) {
             </label>
           ))}
         </fieldset>
-        <label>Reason for change {status === 'Maintenance' ? <span className="req">required</span> : <span className="muted">(optional)</span>}
+        <label><span>Reason for change {status === 'Maintenance' ? <span className="req">required</span> : <span className="muted">(optional)</span>}</span>
           <textarea className="input" rows={3} value={reason} onChange={(e) => setReason(e.target.value)}
             placeholder="e.g. Scheduled firmware upgrade" />
         </label>
