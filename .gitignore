@@ -11,7 +11,7 @@ mutants/
 venv/
 
 # Node
-node_modules/
+node_modules
 frontend/dist/
 test-results/
 playwright-report/
@@ -20,3 +20,4 @@ playwright-report/
 .DS_Store
 .vscode/
 .idea/
+e2e-fleet.db
