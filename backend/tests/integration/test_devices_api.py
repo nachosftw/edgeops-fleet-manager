@@ -101,7 +101,8 @@ def test_reboot(seeded_client):
 
 def test_telemetry_ingestion_updates_health(client, new_device):
     client.post("/api/v1/devices", json=new_device)
-    r = client.post("/api/v1/devices/DEV-001/telemetry", json={"battery": 8, "signal_strength": 60, "uptime_seconds": 120})
+    reading = {"battery": 8, "signal_strength": 60, "uptime_seconds": 120}
+    r = client.post("/api/v1/devices/DEV-001/telemetry", json=reading)
     assert r.status_code == 200
     assert (r.json()["battery"], r.json()["uptime_seconds"], r.json()["health"]) == (8, 120, "Critical")
     bad = client.post("/api/v1/devices/DEV-001/telemetry", json={"battery": 101, "signal_strength": 60})
