@@ -154,3 +154,35 @@ def test_filter_devices():
     assert [d["id"] for d in services.filter_devices(fleet, search="dev-002")] == ["DEV-002"]
     assert [d["id"] for d in services.filter_devices(fleet, search="10.0.0.2")] == ["DEV-002"]
     assert services.filter_devices(fleet, status="Online", device_type="Drone") == []
+
+
+# --- added after mutation run #1: kill the 6 surviving mutants ------------
+
+@pytest.mark.parametrize("args,expected", [
+    (("Online", "Exploded", ""), "Unknown status 'Exploded'"),
+    (("Online", "Online", ""), "Device is already Online"),
+    (("Online", "Maintenance", ""), "A reason note is required when moving a device to Maintenance"),
+])
+def test_status_error_messages_are_exact(args, expected):
+    # the UI shows these strings verbatim, so assert equality, not containment
+    with pytest.raises(DomainError) as exc:
+        services.validate_status_change(*args)
+    assert exc.value.message == expected
+    assert str(exc.value) == expected
+
+
+def test_reboot_error_message_is_exact():
+    with pytest.raises(DomainError) as exc:
+        services.validate_reboot("Offline")
+    assert exc.value.message == "Cannot reboot an Offline device: it is unreachable"
+    assert exc.value.code == 409
+
+
+def test_critical_alerts_sort_before_warnings_regardless_of_id():
+    alerts = services.build_alerts([dev(id="DEV-001", battery=15), dev(id="DEV-002", status="Offline")])
+    assert [(a["device_id"], a["severity"]) for a in alerts] == [("DEV-002", "critical"), ("DEV-001", "warning")]
+
+
+def test_availability_rounds_to_one_decimal():
+    fleet = [dev(status="Online"), dev(status="Offline"), dev(status="Offline")]
+    assert services.summarize(fleet)["availability_pct"] == 33.3
