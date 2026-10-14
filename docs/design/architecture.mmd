@@ -1,0 +1,35 @@
+flowchart TB
+    user(["👤 Fleet Operator /<br/>Technician / Admin<br/>(Web browser)"])
+    iot(["📡 IoT device<br/>(telemetry push)"])
+    subgraph host["Docker Compose host"]
+        direction LR
+        subgraph fe["frontend container · nginx :80 → host :3000"]
+            spa["React 19 SPA<br/>(esbuild bundle)<br/>Dashboard · Devices · Details<br/>Add · Status · Settings"]
+            proxy["nginx reverse proxy<br/>/api/* → backend:5000"]
+        end
+        subgraph be["backend container · uvicorn :5000"]
+            routers["FastAPI routers<br/>/api/v1/devices · /fleet · /health"]
+            schemas["Pydantic schemas<br/>(validation)"]
+            services["Domain services<br/>(rules · health · alerts)"]
+            crud["Data-access layer<br/>(SQLAlchemy ORM)"]
+        end
+        db[("SQLite<br/>fleetops.db<br/>volume: fleet-data")]
+    end
+    user -- "HTTPS / HTML, JS" --> spa
+    spa -- "fetch JSON (REST)" --> proxy
+    proxy -- "HTTP/JSON" --> routers
+    iot -- "POST /telemetry" --> routers
+    routers --> schemas
+    routers --> services
+    routers --> crud
+    crud --> services
+    crud -- "SQL" --> db
+    classDef ext fill:#e0f2fe,stroke:#0891b2,color:#0b1f3a
+    classDef box fill:#ffffff,stroke:#1d3f6e,color:#0b1f3a
+    classDef store fill:#fef3c7,stroke:#b45309,color:#0b1f3a
+    class user,iot ext
+    class spa,proxy,routers,schemas,services,crud box
+    class db store
+    style host fill:#f2f5f9,stroke:#0b1f3a
+    style fe fill:#ecfeff,stroke:#06b6d4
+    style be fill:#eef2ff,stroke:#1d3f6e

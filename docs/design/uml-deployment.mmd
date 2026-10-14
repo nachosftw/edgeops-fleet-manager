@@ -1,0 +1,26 @@
+flowchart LR
+    subgraph client["«device» Client machine"]
+        br["«execution env»<br/>Web browser<br/>React SPA (app.js, app.css)"]
+    end
+    subgraph dockerhost["«device» Docker host (laptop / Codespaces / VM)"]
+        direction TB
+        subgraph c1["«container» fleetops-frontend · nginx:1.27-alpine"]
+            ng["nginx.conf<br/>static files + /api proxy<br/>:80 → host :3000"]
+        end
+        subgraph c2["«container» fleetops-backend · python:3.12-slim"]
+            uv["uvicorn → FastAPI app<br/>(main:app) :5000"]
+        end
+        vol[("«volume» fleet-data<br/>/data/fleetops.db")]
+        ng -- "HTTP :5000<br/>(compose network)" --> uv
+        uv --- vol
+    end
+    subgraph gh["«cloud» GitHub"]
+        direction TB
+        repo["Repository<br/>main · develop · feature/*"]
+        ci["GitHub Actions CI<br/>lint · tests · e2e · docker build"]
+        repo -- "push / PR" --> ci
+    end
+    br -- "HTTP :3000" --> ng
+    repo -. "git clone +<br/>docker compose up --build" .-> dockerhost
+    classDef n fill:#ffffff,stroke:#1d3f6e,color:#0b1f3a
+    class br,ng,uv,repo,ci n
