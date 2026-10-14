@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to FleetOps. Format: [Keep a Changelog](https://keepachangelog.com), versioning: [SemVer](https://semver.org).
 
+## [1.0.1] – 2026-10-14
+### Fixed
+- Add-device and status modals: the "(optional)" and "required" hints wrapped onto their own line under the field label.
+- Tests no longer hard-code the version string; they read `app.__version__`.
+
 ## [1.0.0] – 2026-10-14
 ### Added
 - `/api/v1` REST API: device CRUD, status updates with audit notes, remote reboot, telemetry ingestion, device history, fleet summary, and health check.

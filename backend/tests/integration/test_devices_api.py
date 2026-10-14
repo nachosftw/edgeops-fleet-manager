@@ -2,13 +2,15 @@
 
 import pytest
 
+from app import __version__
+
 pytestmark = pytest.mark.integration
 
 
 def test_health_endpoint(client):
     r = client.get("/api/v1/health")
     assert r.status_code == 200
-    assert r.json() == {"status": "ok", "version": "1.0.0"}
+    assert r.json() == {"status": "ok", "version": __version__}
 
 
 def test_empty_fleet_lists_nothing(client):

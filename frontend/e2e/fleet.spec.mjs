@@ -76,7 +76,7 @@ test('E2E-06 delete a device after confirmation', async ({ page }) => {
 test('E2E-07 settings: test connection and persist dark theme', async ({ page }) => {
   await page.goto('/#/settings');
   await page.getByRole('button', { name: 'Test connection' }).click();
-  await expect(page.getByTestId('connection-check')).toHaveText('Connected · API v1.0.0');
+  await expect(page.getByTestId('connection-check')).toHaveText(/^Connected · API v\d+\.\d+\.\d+$/);
   await page.getByRole('radio', { name: '☾ Dark' }).click();
   await page.getByRole('button', { name: 'Save settings' }).click();
   await page.reload();
