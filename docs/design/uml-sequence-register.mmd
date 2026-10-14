@@ -1,0 +1,25 @@
+sequenceDiagram
+    autonumber
+    actor Ad as Administrator
+    participant UI as React SPA
+    participant API as FastAPI router
+    participant C as crud.create_device
+    participant S as services
+    participant DB as SQLite
+    Ad->>UI: fill name, type, IP, status
+    UI->>UI: validateDevice(form)
+    UI->>API: POST /api/v1/devices
+    API->>API: Pydantic DeviceCreate (IPv4 check)
+    API->>C: create_device(payload)
+    C->>DB: SELECT device WHERE ip_address = ?
+    alt IP already used
+        C-->>API: DomainError 409
+        API-->>UI: 409 "already assigned to DEV-xxx"
+    else IP free
+        C->>DB: SELECT ids (devices + status_logs)
+        C->>S: next_device_id(ids)
+        S-->>C: "DEV-007"
+        C->>DB: INSERT devices, INSERT status_logs (REGISTERED)
+        API-->>UI: 201 Created DeviceOut
+        UI-->>Ad: toast "registered as DEV-007"
+    end

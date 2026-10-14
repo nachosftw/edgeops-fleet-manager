@@ -1,0 +1,39 @@
+sequenceDiagram
+    autonumber
+    actor Op as Fleet Operator
+    participant UI as React SPA
+    participant NG as nginx
+    participant API as FastAPI router
+    participant V as Pydantic schema
+    participant C as crud
+    participant S as services
+    participant DB as SQLite
+    Op->>UI: choose "Maintenance", type reason, Confirm
+    UI->>UI: validateStatusChange() (client-side)
+    UI->>NG: PUT /api/v1/devices/DEV-001/status {status, reason_note}
+    NG->>API: forward request
+    API->>V: parse body
+    alt invalid status value
+        V-->>API: ValidationError
+        API-->>UI: 422 Unprocessable Entity
+    else valid
+        API->>C: update_status(db, id, status, note)
+        C->>DB: SELECT device
+        alt device missing
+            C-->>API: NotFound
+            API-->>UI: 404
+        else found
+            C->>S: validate_status_change(cur, new, note)
+            alt rule violated
+                S-->>C: DomainError(409/422)
+                C-->>API: DomainError
+                API-->>UI: 409 / 422 {detail}
+            else ok
+                C->>DB: INSERT status_logs (STATUS_CHANGE)
+                C->>DB: UPDATE devices SET status
+                C-->>API: Device
+                API-->>UI: 200 DeviceOut (+health)
+                UI->>UI: toast + refresh list & history
+            end
+        end
+    end

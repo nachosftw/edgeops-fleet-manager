@@ -1,0 +1,20 @@
+flowchart TD
+    s(( )) --> a1["Open Register device form"]
+    a1 --> a2["Enter name, type, IP, location, status"]
+    a2 --> d1{"Client-side<br/>validation ok?"}
+    d1 -- no --> e1["Show field errors"] --> a2
+    d1 -- yes --> a3["POST /api/v1/devices"]
+    a3 --> d2{"Payload valid?<br/>(Pydantic)"}
+    d2 -- no --> e2["422: show server message"] --> a2
+    d2 -- yes --> d3{"IP already<br/>assigned?"}
+    d3 -- yes --> e3["409: show conflict"] --> a2
+    d3 -- no --> a4["Generate next DEV-NNN id"]
+    a4 --> a5["Insert device + REGISTERED log"]
+    a5 --> a6["Return 201 + device"]
+    a6 --> a7["Close modal, toast, refresh dashboard"]
+    a7 --> f(((" ")))
+    classDef act fill:#ecfeff,stroke:#0891b2,color:#0b1f3a
+    classDef err fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class a1,a2,a3,a4,a5,a6,a7 act
+    class e1,e2,e3 err
+    style s fill:#0b1f3a,stroke:#0b1f3a
