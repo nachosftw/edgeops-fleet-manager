@@ -1,5 +1,7 @@
 """Data-access layer: every database read/write goes through here."""
 
+from datetime import timedelta
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -119,12 +121,16 @@ DEMO_FLEET = [
 def seed(db: Session) -> None:
     if db.scalar(select(Device.id).limit(1)) is not None:
         return
+    now = utcnow()
     for i, data in enumerate(DEMO_FLEET, start=1):
-        device = Device(id=f"DEV-{i:03d}", **data)
+        registered = now - timedelta(days=30 - i * 3)
+        device = Device(id=f"DEV-{i:03d}", created_at=registered, **data)
         db.add(device)
-        db.add(StatusLog(device_id=device.id, old_status=None, new_status=device.status,
-                         event="REGISTERED", reason_note="Seeded demo device"))
+        db.add(StatusLog(device_id=device.id, old_status=None,
+                         new_status="Online" if data["status"] != "Offline" else "Offline",
+                         event="REGISTERED", reason_note="Seeded demo device", changed_at=registered))
     db.flush()
     db.add(StatusLog(device_id="DEV-004", old_status="Online", new_status="Maintenance",
-                     event="STATUS_CHANGE", reason_note="Scheduled firmware upgrade"))
+                     event="STATUS_CHANGE", reason_note="Scheduled firmware upgrade",
+                     changed_at=now - timedelta(hours=2)))
     db.commit()
