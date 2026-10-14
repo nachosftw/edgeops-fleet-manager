@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="900" viewBox="0 0 1500 900" font-family="Inter, Segoe UI, Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d3f6e"/></marker></defs>
+<circle cx="750" cy="450" r="120" fill="#0b1f3a" stroke="#06b6d4" stroke-width="3"/>
+<text x="750.0" y="429.1" text-anchor="middle" font-size="22" font-weight="600" fill="white">0</text>
+<text x="750.0" y="457.7" text-anchor="middle" font-size="22" font-weight="600" fill="white">FleetOps</text>
+<text x="750.0" y="486.3" text-anchor="middle" font-size="22" font-weight="600" fill="white">System</text>
+<rect x="80.0" y="95.0" width="260" height="90" rx="6" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+<text x="210.0" y="145.9" text-anchor="middle" font-size="17" font-weight="600" fill="#0b1f3a">Fleet Operator</text>
+<rect x="1160.0" y="95.0" width="260" height="90" rx="6" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+<text x="1290.0" y="134.9" text-anchor="middle" font-size="17" font-weight="600" fill="#0b1f3a">Maintenance</text>
+<text x="1290.0" y="157.0" text-anchor="middle" font-size="17" font-weight="600" fill="#0b1f3a">Technician</text>
+<rect x="80.0" y="715.0" width="260" height="90" rx="6" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+<text x="210.0" y="754.9" text-anchor="middle" font-size="17" font-weight="600" fill="#0b1f3a">System</text>
+<text x="210.0" y="777.0" text-anchor="middle" font-size="17" font-weight="600" fill="#0b1f3a">Administrator</text>
+<rect x="1160.0" y="715.0" width="260" height="90" rx="6" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+<text x="1290.0" y="766.0" text-anchor="middle" font-size="17" font-weight="600" fill="#0b1f3a">IoT Device</text>
+<line x1="280.4" y1="198.9" x2="636.5" y2="406.8" stroke="#1d3f6e" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="327" y="340" width="194" height="45" rx="5" fill="white" fill-opacity="0.92"/>
+<text x="423.6" y="359.1" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">filters, search,</text>
+<text x="423.6" y="378.6" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">status change + reason</text>
+<line x1="655.5" y1="373.7" x2="296.4" y2="171.1" stroke="#1d3f6e" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="439" y="188" width="144" height="45" rx="5" fill="white" fill-opacity="0.92"/>
+<text x="510.8" y="207.2" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">summary, alerts,</text>
+<text x="510.8" y="226.7" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">device list</text>
+<line x1="1203.6" y1="171.1" x2="844.5" y2="373.7" stroke="#1d3f6e" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="913" y="188" width="152" height="45" rx="5" fill="white" fill-opacity="0.92"/>
+<text x="989.2" y="207.2" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">reboot command,</text>
+<text x="989.2" y="226.7" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">maintenance notes</text>
+<line x1="863.5" y1="406.8" x2="1219.6" y2="198.9" stroke="#1d3f6e" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="976" y="340" width="202" height="45" rx="5" fill="white" fill-opacity="0.92"/>
+<text x="1076.4" y="359.1" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">device details, gauges,</text>
+<text x="1076.4" y="378.6" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">status history</text>
+<line x1="296.4" y1="728.9" x2="655.5" y2="526.3" stroke="#1d3f6e" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="431" y="665" width="160" height="45" rx="5" fill="white" fill-opacity="0.92"/>
+<text x="510.8" y="683.8" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">new device, delete</text>
+<text x="510.8" y="703.3" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">request, settings</text>
+<line x1="636.5" y1="493.2" x2="280.4" y2="701.1" stroke="#1d3f6e" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="335" y="513" width="177" height="45" rx="5" fill="white" fill-opacity="0.92"/>
+<text x="423.6" y="531.9" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">registration result,</text>
+<text x="423.6" y="551.4" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">health check</text>
+<line x1="1219.6" y1="701.1" x2="863.5" y2="493.2" stroke="#1d3f6e" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="992" y="513" width="169" height="45" rx="5" fill="white" fill-opacity="0.92"/>
+<text x="1076.4" y="531.9" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">telemetry: battery,</text>
+<text x="1076.4" y="551.4" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">signal, uptime</text>
+<line x1="844.5" y1="526.3" x2="1203.6" y2="728.9" stroke="#1d3f6e" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="921" y="665" width="136" height="45" rx="5" fill="white" fill-opacity="0.92"/>
+<text x="989.2" y="683.8" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">reboot</text>
+<text x="989.2" y="703.3" text-anchor="middle" font-size="15" font-weight="400" fill="#334155">acknowledgement</text>
+<text x="750.0" y="47.0" text-anchor="middle" font-size="20" font-weight="700" fill="#0b1f3a">DFD Level 0 — Context diagram</text>
+</svg>

@@ -1,0 +1,83 @@
+classDiagram
+    direction LR
+    class Device {
+        +str id
+        +str name
+        +str type
+        +str ip_address
+        +str status
+        +int battery
+        +int signal_strength
+        +int uptime_seconds
+        +str firmware
+        +str location
+        +datetime created_at
+        +datetime last_seen
+    }
+    class StatusLog {
+        +int id
+        +str device_id
+        +str old_status
+        +str new_status
+        +str event
+        +str reason_note
+        +datetime changed_at
+    }
+    class DeviceCreate {
+        <<Pydantic>>
+        +str name
+        +DeviceType type
+        +str ip_address
+        +Status status
+        +str location
+        +check_ip()
+    }
+    class StatusUpdate {
+        <<Pydantic>>
+        +Status status
+        +str reason_note
+    }
+    class Services {
+        <<module>>
+        +is_valid_ipv4(ip) bool
+        +next_device_id(ids) str
+        +validate_status_change(cur, new, note)
+        +validate_reboot(status)
+        +health_of(status, battery, signal) str
+        +build_alerts(devices) list
+        +summarize(devices) dict
+        +filter_devices(devices, ...) list
+    }
+    class Crud {
+        <<module>>
+        +list_devices(db) list
+        +get_device(db, id) Device
+        +create_device(db, payload) Device
+        +update_status(db, id, status, note) Device
+        +reboot(db, id) Device
+        +record_telemetry(db, id, reading) Device
+        +history(db, id) list
+        +delete_device(db, id)
+    }
+    class DomainError {
+        +str message
+        +int code
+    }
+    class Database {
+        +Engine engine
+        +sessionmaker SessionLocal
+        +create_all()
+        +session() Session
+    }
+    class DevicesRouter {
+        <<APIRouter /api/v1/devices>>
+    }
+    DevicesRouter ..> DeviceCreate : validates
+    DevicesRouter ..> StatusUpdate : validates
+    DevicesRouter --> Crud : calls
+    Crud --> Services : applies rules
+    Crud --> Database : session
+    Crud ..> Device : persists
+    Crud ..> StatusLog : appends
+    Services ..> DomainError : raises
+    Device "1" -- "0..*" StatusLog : audit trail

@@ -1,0 +1,26 @@
+erDiagram
+    direction LR
+    DEVICE ||--o{ STATUS_LOG : "has audit entries"
+    DEVICE {
+        string id PK "DEV-NNN"
+        string name "2-64 chars"
+        string type "Rover | Drone | Sensor | Edge Node | Vehicle"
+        string ip_address UK "IPv4"
+        string status "Online | Offline | Maintenance"
+        int battery "0-100 %"
+        int signal_strength "0-100 %"
+        int uptime_seconds
+        string firmware
+        string location
+        datetime created_at
+        datetime last_seen
+    }
+    STATUS_LOG {
+        int id PK "auto-increment"
+        string device_id "logical FK to DEVICE.id (kept after delete)"
+        string old_status "nullable"
+        string new_status
+        string event "REGISTERED | STATUS_CHANGE | REBOOT | DELETED"
+        text reason_note
+        datetime changed_at
+    }

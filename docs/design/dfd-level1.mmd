@@ -1,0 +1,38 @@
+flowchart TB
+    admin["System Administrator"]
+    op["Fleet Operator"]
+    tech["Maintenance Technician"]
+    dev["IoT Device"]
+    p1(("1.0<br/>Register<br/>Device"))
+    p2(("2.0<br/>Monitor<br/>Fleet"))
+    p3(("3.0<br/>Update<br/>Status"))
+    p4(("4.0<br/>Remote<br/>Reboot"))
+    p5(("5.0<br/>Ingest<br/>Telemetry"))
+    p6(("6.0<br/>Decommission<br/>Device"))
+    d1[("D1 · Devices")]
+    d2[("D2 · Status Logs")]
+    admin -- "name, type, IP, location" --> p1
+    p1 -- "new device record" --> d1
+    p1 -- "REGISTERED entry" --> d2
+    p1 -- "DEV-id / validation errors" --> admin
+    d1 -- "device records" --> p2
+    p2 -- "summary, alerts, filtered list" --> op
+    op -- "new status + reason" --> p3
+    d1 -- "current status" --> p3
+    p3 -- "updated status" --> d1
+    p3 -- "STATUS_CHANGE entry" --> d2
+    tech -- "reboot request" --> p4
+    p4 -- "status = Online, uptime = 0" --> d1
+    p4 -- "REBOOT entry" --> d2
+    d2 -- "status history" --> tech
+    dev -- "battery, signal, uptime" --> p5
+    p5 -- "telemetry + last_seen" --> d1
+    admin -- "delete request" --> p6
+    p6 -- "remove record" --> d1
+    p6 -- "DELETED tombstone" --> d2
+    classDef ent fill:#e0f2fe,stroke:#0891b2,color:#0b1f3a
+    classDef proc fill:#0b1f3a,stroke:#06b6d4,color:#ffffff
+    classDef store fill:#fef3c7,stroke:#b45309,color:#0b1f3a
+    class admin,op,tech,dev ent
+    class p1,p2,p3,p4,p5,p6 proc
+    class d1,d2 store

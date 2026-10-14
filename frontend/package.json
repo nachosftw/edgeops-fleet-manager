@@ -1,0 +1,21 @@
+{
+  "name": "fleetops-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FleetOps React single-page dashboard",
+  "scripts": {
+    "dev": "node build.mjs --serve",
+    "build": "node build.mjs",
+    "test": "node --test --test-reporter=spec tests/*.test.mjs",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "esbuild": "^0.28.0"
+  }
+}
