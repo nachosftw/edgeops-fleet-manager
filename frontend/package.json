@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node build.mjs --serve",
     "build": "node build.mjs",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test --test-reporter=spec tests/*.test.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
