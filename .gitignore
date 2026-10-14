@@ -11,7 +11,7 @@ mutants/
 venv/
 
 # Node
-node_modules/
+node_modules
 frontend/dist/
 test-results/
 playwright-report/
