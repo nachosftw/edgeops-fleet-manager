@@ -49,7 +49,7 @@ export default function AddDeviceModal({ onClose, onSubmit }) {
             {errors.ip_address && <span className="field-error">{errors.ip_address}</span>}
           </label>
         </div>
-        <label>Location <span className="muted">(optional)</span>
+        <label><span>Location <span className="muted">(optional)</span></span>
           <input className="input" value={form.location} onChange={set('location')} placeholder="e.g. Depot A" />
         </label>
         <fieldset className="radios">
